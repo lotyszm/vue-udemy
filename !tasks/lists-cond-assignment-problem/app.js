@@ -2,7 +2,8 @@ const app = Vue.createApp({
   data() {
     return {
       enteredValue: '',
-      goals: []
+      goals: [],
+      isListVisible: true
     };
   },
   methods: {
@@ -11,9 +12,12 @@ const app = Vue.createApp({
       this.enteredValue = '';
     },
     removeGoal(index) {
-      this.goals.splice(index, 1);
+      this.goals.splice(index, 1)
+    },
+    toggleShowList() {
+      this.isListVisible = !this.isListVisible;
     }
   }
 });
 
-app.mount('#user-goals');
+app.mount('#assignment');
