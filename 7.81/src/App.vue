@@ -2,7 +2,14 @@
   <div>
     <header><h1>Friends</h1></header>
     <ul>
-      <friend-contact> </friend-contact>
+      <friend-contact
+        v-for="friend in friends"
+        :key="friend.id"
+        :name="friend.name"
+        :phone-number="friend.phone"
+        :email-address="friend.email"
+        :is-favorite="true"
+      > </friend-contact>
     </ul>
   </div>
 </template>
@@ -10,7 +17,22 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      friends: [
+        {
+          id: "manuel",
+          name: "Manuel Lorenz",
+          phone: "01234 5678 991",
+          email: 'ddd@www.co'
+        },
+        {
+          id: "julie",
+          name: "Julie Jones",
+          phone: "09876 543 221",
+          email: 'ddd@oo.pp'
+        },
+      ],
+    };
   },
 };
 </script>
