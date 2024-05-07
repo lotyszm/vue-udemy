@@ -1,14 +1,18 @@
 <template>
   <div>
     <header><h1>Friends</h1></header>
+    <new-friend @add-contact="addContact"></new-friend>
     <ul>
       <friend-contact
         v-for="friend in friends"
         :key="friend.id"
+        :id="friend.id"
         :name="friend.name"
         :phone-number="friend.phone"
         :email-address="friend.email"
-        :is-favorite="true"
+        :is-favorite="friend.isFavorite"
+        @toggle-favorite="toggleFavoriteStatus"
+        @delete-friend="deleteFriend"
       > </friend-contact>
     </ul>
   </div>
@@ -23,16 +27,37 @@ export default {
           id: "manuel",
           name: "Manuel Lorenz",
           phone: "01234 5678 991",
-          email: 'ddd@www.co'
+          email: 'ddd@www.co',
+          isFavorite: true,
         },
         {
           id: "julie",
           name: "Julie Jones",
           phone: "09876 543 221",
-          email: 'ddd@oo.pp'
+          email: 'ddd@oo.pp',
+          isFavorite: false,
         },
       ],
     };
+  },
+  methods: {
+    toggleFavoriteStatus(friendId) {
+      const friend = this.friends.find((f) => f.id === friendId);
+      friend.isFavorite = !friend.isFavorite;
+    },
+    addContact(name, phone, email) {
+      const newFriend = {
+        id: new Date().toISOString(),
+        name: name,
+        phone: phone,
+        email: email,
+        isFavorite: false,
+      };
+      this.friends.push(newFriend);
+    },
+    deleteFriend(friendId) {
+      this.friends = this.friends.filter((f) => f.id !== friendId);
+    },
   },
 };
 </script>
@@ -70,7 +95,8 @@ header {
   list-style: none;
 }
 
-#app li {
+#app li,
+#app form {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   margin: 1rem auto;
   border-radius: 10px;
