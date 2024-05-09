@@ -1,7 +1,6 @@
 <template>
-  <div>
-    <the-header></the-header>
-    <badge-list></badge-list>
+  <the-header></the-header>
+  <!-- <badge-list></badge-list>
     <user-info
       :full-name="activeUser.name"
       :info-text="activeUser.description"
@@ -10,31 +9,48 @@
     <course-goals #default="slotProps">
       <h2>{{ slotProps.item }}</h2>
       <p>{{ slotProps["another-prop"] }}</p>
-    </course-goals>
-  </div>
+    </course-goals> -->
+
+  <button @click="setActiveComponent('active-goals')">active goals</button>
+  <button @click="setActiveComponent('manage-goals')">manage goals</button>
+  <!-- <active-goals v-if="selectedComponent === 'active-goals'"></active-goals>
+    <manage-goals v-if="selectedComponent === 'manage-goals'"></manage-goals> -->
+  <keep-alive>
+    <component :is="selectedComponent"></component>
+  </keep-alive>
 </template>
 
 <script>
-import TheHeader from "./components/TheHeader.vue";
-import BadgeList from "./components/BadgeList.vue";
-import UserInfo from "./components/UserInfo.vue";
-import CourseGoals from "./components/CourseGoals.vue";
+import TheHeader from "./components/layout/TheHeader.vue";
+// import BadgeList from "./components/BadgeList.vue";
+// import UserInfo from "./components/UserInfo.vue";
+// import CourseGoals from "./components/CourseGoals.vue";
+import ActiveGoals from "./components/ActiveGoals.vue";
+import ManageGoals from "./components/ManageGoals.vue";
 
 export default {
   components: {
     TheHeader,
-    BadgeList,
-    UserInfo,
-    CourseGoals,
+    // BadgeList,
+    // UserInfo,
+    // CourseGoals,
+    ActiveGoals,
+    ManageGoals,
   },
   data() {
     return {
+      selectedComponent: "active-goals",
       activeUser: {
         name: "Maximilian Schwarzmüller",
         description: "Site owner and admin",
         role: "admin",
       },
     };
+  },
+  methods: {
+    setActiveComponent(component) {
+      this.selectedComponent = component;
+    },
   },
 };
 </script>
